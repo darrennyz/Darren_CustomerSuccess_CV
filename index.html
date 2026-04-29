@@ -88,7 +88,7 @@
   <div class="intro__inner">
     <span class="kicker">02 — Career path</span>
     <h2 class="intro__title">A track record built on retention, expansion, and adoption.</h2>
-    <p class="intro__sub">Two roles run concurrently today — slide between them — before the timeline merges into prior chapters.</p>
+    <p class="intro__sub">Two roles run concurrently today — slide between them — before the timeline merges into prior chapters. Tap any card to flip it and read about the company.</p>
   </div>
 </section>
 
@@ -99,75 +99,107 @@
       <span class="period__year">2025 → Present</span>
       <span class="period__label">Two concurrent roles</span>
     </div>
-    <p class="period__hint">Drag the card sideways — or tap the role behind — to switch which branch of the timeline is in focus.</p>
+    <p class="period__hint">Drag the front card sideways to switch — or tap the role peeking behind. Tap the info icon to flip.</p>
   </div>
 
   <div class="branch-stage" data-active="0">
-    <!-- Branched rail SVG: two top branches converge to a single line -->
     <svg class="branch-rail" viewBox="0 0 800 760" preserveAspectRatio="none" aria-hidden="true">
-      <!-- Left branch: from top-left, curves down and into the merge -->
       <path class="rail-left"  d="M 200,0 C 200,180 400,260 400,400" />
-      <!-- Right branch -->
       <path class="rail-right" d="M 600,0 C 600,180 400,260 400,400" />
-      <!-- Merged trunk continues down -->
       <path class="rail-merge" d="M 400,400 L 400,760" />
-      <!-- Branch endpoint nodes -->
       <circle class="node node-l" cx="200" cy="0" r="6" />
       <circle class="node node-r" cx="600" cy="0" r="6" />
-      <!-- Merge node -->
       <circle class="node node-merge" cx="400" cy="400" r="6" fill="#0a0a0a" stroke="none" />
     </svg>
 
     <div class="card-stack" id="cardStack">
 
       <!-- NINTEX -->
-      <article class="role-card" data-i="0">
-        <div class="card__top">
-          <div class="card__co">
-            <span class="card__logo">N</span>
-            <div>
-              <h3>Nintex Singapore</h3>
-              <p class="card__role">Enterprise Customer Success Manager</p>
+      <article class="role-card flippable" data-i="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-face--front">
+            <div class="card__top">
+              <div class="card__co">
+                <span class="card__logo" data-domain="nintex.com" data-letter="N" data-bg="#3a194a"></span>
+                <div>
+                  <h3>Nintex Singapore</h3>
+                  <p class="card__role">Enterprise Customer Success Manager</p>
+                </div>
+              </div>
+              <span class="chip">Apr 2025 — Present</span>
             </div>
+            <ul class="card__list">
+              <li><b>+30% AI adoption</b> avg. via Document Discrepancy Summary, Customer Sentiment Analyzer, Payroll AI Agent, Process Chatbot MCP.</li>
+              <li><b>99.8% Gross Revenue Retention</b> through accurate forecasting and proactive Success Plans.</li>
+              <li><b>USD $1.5M at-risk ARR retained</b> — diagnosing adoption gaps and steering renewal recovery.</li>
+              <li><b>70% of single-year contracts</b> converted to multi-year via aligned value propositions.</li>
+              <li><b>USD $250K+ expansion</b> within first 6 months · <b>USD $6M ARR portfolio</b>, top 40 APAC.</li>
+            </ul>
+            <div class="card__tags"><span>Renewals</span><span>AI Agents</span><span>MCP</span><span>QBRs</span><span>Expansion</span></div>
+            <button type="button" class="flip-toggle" aria-label="About Nintex">i</button>
           </div>
-          <span class="chip">Apr 2025 — Present</span>
+          <div class="flip-face flip-face--back">
+            <div class="back__head">
+              <span class="card__logo card__logo--lg" data-domain="nintex.com" data-letter="N" data-bg="#3a194a"></span>
+              <div>
+                <h4>About Nintex</h4>
+                <span class="back__meta">Process automation · Bellevue, WA · Founded 2006</span>
+              </div>
+            </div>
+            <p class="back__desc">A global leader in process intelligence and automation. Nintex helps enterprises map, automate, and optimise business processes through low-code workflow, document automation, RPA, and AI-driven process insight — used by thousands of organisations and public sector bodies worldwide.</p>
+            <div class="back__industry">
+              <span>Workflow Automation</span><span>Process Intelligence</span><span>Document Generation</span><span>AI Agents</span>
+            </div>
+            <button type="button" class="flip-toggle" aria-label="Back to role">←</button>
+          </div>
         </div>
-        <ul class="card__list">
-          <li><b>+30% AI adoption</b> avg. via Document Discrepancy Summary, Customer Sentiment Analyzer, Payroll AI Agent, Process Chatbot MCP.</li>
-          <li><b>99.8% Gross Revenue Retention</b> through accurate forecasting and proactive Success Plans.</li>
-          <li><b>USD $1.5M at-risk ARR retained</b> — diagnosing adoption gaps and steering renewal recovery.</li>
-          <li><b>70% of single-year contracts</b> converted to multi-year via aligned value propositions.</li>
-          <li><b>USD $250K+ expansion</b> within first 6 months · <b>USD $6M ARR portfolio</b>, top 40 APAC.</li>
-        </ul>
-        <div class="card__tags"><span>Renewals</span><span>AI Agents</span><span>MCP</span><span>QBRs</span><span>Expansion</span></div>
       </article>
 
       <!-- AVERPS -->
-      <article class="role-card is-back" data-i="1">
-        <div class="card__top">
-          <div class="card__co">
-            <span class="card__logo">A</span>
-            <div>
-              <h3>Averps Pte Ltd</h3>
-              <p class="card__role">Applied AI Adoption & Enablement Manager</p>
+      <article class="role-card flippable is-back" data-i="1">
+        <div class="flip-inner">
+          <div class="flip-face flip-face--front">
+            <div class="card__top">
+              <div class="card__co">
+                <span class="card__logo" data-domain="averps.com" data-letter="A" data-bg="#3650e0"></span>
+                <div>
+                  <h3>Averps Pte Ltd</h3>
+                  <p class="card__role">Applied AI Adoption & Enablement Manager</p>
+                </div>
+              </div>
+              <span class="chip">Feb 2025 — Present</span>
             </div>
+            <ul class="card__list">
+              <li>Enabled <b>SME owners and Enterprise clients</b> on applied AI through hands-on sessions for non-technical users.</li>
+              <li>Consulted <b>startup founders on applied AI strategy</b>, co-developing success plans tied to measurable outcomes.</li>
+              <li>Increased <b>product adoption, usage depth, and retention</b> via structured enablement strategies.</li>
+              <li>Evaluated use cases against the right LLM stack — <b>Claude, ChatGPT, Gemini, Supabase, GitHub, Vercel, Railway</b>.</li>
+            </ul>
+            <div class="card__tags"><span>Enablement</span><span>Applied AI</span><span>Founders</span><span>LLM Stack</span></div>
+            <button type="button" class="flip-toggle" aria-label="About Averps">i</button>
           </div>
-          <span class="chip">Feb 2025 — Present</span>
+          <div class="flip-face flip-face--back">
+            <div class="back__head">
+              <span class="card__logo card__logo--lg" data-domain="averps.com" data-letter="A" data-bg="#3650e0"></span>
+              <div>
+                <h4>About Averps</h4>
+                <span class="back__meta">Applied AI Consultancy · Singapore</span>
+              </div>
+            </div>
+            <p class="back__desc">A Singapore-based applied AI consultancy enabling SMEs and enterprises to operationalise AI. Averps pairs strategy, hands-on enablement, and bespoke implementation across leading LLMs and modern cloud tooling — helping non-technical teams turn AI capability into measurable business outcomes.</p>
+            <div class="back__industry">
+              <span>AI Consulting</span><span>Enablement</span><span>LLM Strategy</span><span>Implementation</span>
+            </div>
+            <button type="button" class="flip-toggle" aria-label="Back to role">←</button>
+          </div>
         </div>
-        <ul class="card__list">
-          <li>Enabled <b>SME owners and Enterprise clients</b> on applied AI through hands-on sessions for non-technical users.</li>
-          <li>Consulted <b>startup founders on applied AI strategy</b>, co-developing success plans tied to measurable outcomes.</li>
-          <li>Increased <b>product adoption, usage depth, and retention</b> via structured enablement strategies.</li>
-          <li>Evaluated use cases against the right LLM stack — <b>Claude, ChatGPT, Gemini, Supabase, GitHub, Vercel, Railway</b>.</li>
-        </ul>
-        <div class="card__tags"><span>Enablement</span><span>Applied AI</span><span>Founders</span><span>LLM Stack</span></div>
       </article>
 
     </div>
 
     <div class="stack-cue">
       <div class="stack-cue__count"><span></span><span></span></div>
-      <span>drag · tap to switch</span>
+      <span>drag · tap to switch · i to flip</span>
     </div>
   </div>
 </section>
@@ -178,60 +210,132 @@
 
   <article class="t-item" data-side="left">
     <div class="t-dot"></div>
-    <div class="t-card">
-      <div class="t-card__head">
-        <span class="chip">Nov 2022 — Apr 2025</span>
-        <h3>BIPO Service Singapore Pte Ltd</h3>
-        <p class="t-card__role">Customer Success Manager</p>
-      </div>
-      <ul>
-        <li><b>+23% portfolio revenue growth</b> via upsell, cross-sell, and renewals.</li>
-        <li>Initiated CS team-wide projects: enablement webinars, industry events, refreshed NPS feedback system.</li>
-        <li><b>USD $200K at-risk revenue protected</b> via deeper adoption of BIPO HRMS modules.</li>
-        <li><b>USD $3M ARR portfolio</b> — strategic enterprise clients in Logistics, F&B, Retail.</li>
-        <li><b>USD $100K</b> in referral pipeline for the New Business team.</li>
-      </ul>
-      <div class="t-card__stats">
-        <div><div class="s-num">130%</div><div class="s-lbl">FY23 quota</div></div>
-        <div><div class="s-num">126%</div><div class="s-lbl">FY24 quota</div></div>
-        <div><div class="s-num">99%</div><div class="s-lbl">FY23/24 retention</div></div>
+    <div class="t-card flippable">
+      <div class="flip-inner">
+        <div class="flip-face flip-face--front">
+          <div class="t-card__head">
+            <span class="chip">Nov 2022 — Apr 2025</span>
+            <div class="t-card__title">
+              <span class="card__logo card__logo--sm" data-domain="biposervice.com" data-letter="B" data-bg="#1f3a93"></span>
+              <div>
+                <h3>BIPO Service Singapore</h3>
+                <p class="t-card__role">Customer Success Manager</p>
+              </div>
+            </div>
+          </div>
+          <ul>
+            <li><b>+23% portfolio revenue growth</b> via upsell, cross-sell, and renewals.</li>
+            <li>Initiated CS team-wide projects: enablement webinars, industry events, refreshed NPS feedback system.</li>
+            <li><b>USD $200K at-risk revenue protected</b> via deeper adoption of BIPO HRMS modules.</li>
+            <li><b>USD $3M ARR portfolio</b> — strategic enterprise clients in Logistics, F&B, Retail.</li>
+            <li><b>USD $100K</b> in referral pipeline for the New Business team.</li>
+          </ul>
+          <div class="t-card__stats">
+            <div><div class="s-num">130%</div><div class="s-lbl">FY23 quota</div></div>
+            <div><div class="s-num">126%</div><div class="s-lbl">FY24 quota</div></div>
+            <div><div class="s-num">99%</div><div class="s-lbl">FY23/24 retention</div></div>
+          </div>
+          <button type="button" class="flip-toggle" aria-label="About BIPO">i</button>
+        </div>
+        <div class="flip-face flip-face--back">
+          <div class="back__head">
+            <span class="card__logo card__logo--lg" data-domain="biposervice.com" data-letter="B" data-bg="#1f3a93"></span>
+            <div>
+              <h4>About BIPO</h4>
+              <span class="back__meta">HR & Payroll · HQ Singapore · Founded 2010</span>
+            </div>
+          </div>
+          <p class="back__desc">BIPO Service is a Singapore-headquartered global HR and payroll provider serving enterprises across Asia-Pacific, EMEA, and the Americas. The BIPO HRMS suite covers payroll, attendance, performance, and analytics — backed by managed services that simplify regional compliance.</p>
+          <div class="back__industry">
+            <span>HRMS</span><span>Payroll</span><span>Workforce Management</span><span>APAC</span>
+          </div>
+          <button type="button" class="flip-toggle" aria-label="Back to role">←</button>
+        </div>
       </div>
     </div>
   </article>
 
   <article class="t-item" data-side="right">
     <div class="t-dot"></div>
-    <div class="t-card">
-      <div class="t-card__head">
-        <span class="chip">Jan 2022 — Oct 2022</span>
-        <h3>ServiceNow Singapore Pte Ltd</h3>
-        <p class="t-card__role">Enterprise Sales Development Representative</p>
+    <div class="t-card flippable">
+      <div class="flip-inner">
+        <div class="flip-face flip-face--front">
+          <div class="t-card__head">
+            <span class="chip">Jan 2022 — Oct 2022</span>
+            <div class="t-card__title">
+              <span class="card__logo card__logo--sm" data-domain="servicenow.com" data-letter="S" data-bg="#0b1320"></span>
+              <div>
+                <h3>ServiceNow Singapore</h3>
+                <p class="t-card__role">Enterprise Sales Development Representative</p>
+              </div>
+            </div>
+          </div>
+          <ul>
+            <li><b>USD $1.5M+ in new business pipeline</b> across APAC Major Enterprises & FSI.</li>
+            <li>Built and maintained senior-stakeholder relationships across key accounts.</li>
+            <li><b>117% Q1 FY22</b> attainment within first quarter of employment.</li>
+            <li><b>2nd in APAC</b> — ServiceNow Customer Workflow Prospecting week.</li>
+            <li><b>107% Q2 FY22</b> attainment.</li>
+          </ul>
+          <button type="button" class="flip-toggle" aria-label="About ServiceNow">i</button>
+        </div>
+        <div class="flip-face flip-face--back">
+          <div class="back__head">
+            <span class="card__logo card__logo--lg" data-domain="servicenow.com" data-letter="S" data-bg="#0b1320"></span>
+            <div>
+              <h4>About ServiceNow</h4>
+              <span class="back__meta">AI platform for business transformation · Santa Clara, CA</span>
+            </div>
+          </div>
+          <p class="back__desc">ServiceNow is the AI platform for business transformation — connecting people, processes, data, and devices through workflows for IT, customer, employee, and creator experiences. A Fortune 500 company powering digital workflows for the world's largest enterprises.</p>
+          <div class="back__industry">
+            <span>ITSM</span><span>Workflow Platform</span><span>Enterprise SaaS</span><span>FSI</span>
+          </div>
+          <button type="button" class="flip-toggle" aria-label="Back to role">←</button>
+        </div>
       </div>
-      <ul>
-        <li><b>USD $1.5M+ in new business pipeline</b> across APAC Major Enterprises & FSI.</li>
-        <li>Built and maintained senior-stakeholder relationships across key accounts.</li>
-        <li><b>117% Q1 FY22</b> attainment within first quarter of employment.</li>
-        <li><b>2nd in APAC</b> — ServiceNow Customer Workflow Prospecting week.</li>
-        <li><b>107% Q2 FY22</b> attainment.</li>
-      </ul>
     </div>
   </article>
 
   <article class="t-item" data-side="left">
     <div class="t-dot"></div>
-    <div class="t-card">
-      <div class="t-card__head">
-        <span class="chip">Sep 2019 — Aug 2021</span>
-        <h3>Oversea-Chinese Banking Corporation</h3>
-        <p class="t-card__role">Relationship Manager</p>
+    <div class="t-card flippable">
+      <div class="flip-inner">
+        <div class="flip-face flip-face--front">
+          <div class="t-card__head">
+            <span class="chip">Sep 2019 — Aug 2021</span>
+            <div class="t-card__title">
+              <span class="card__logo card__logo--sm" data-domain="ocbc.com" data-letter="O" data-bg="#c8102e"></span>
+              <div>
+                <h3>Oversea-Chinese Banking Corporation</h3>
+                <p class="t-card__role">Relationship Manager</p>
+              </div>
+            </div>
+          </div>
+          <ul>
+            <li>Drove growth in customer Assets Under Management.</li>
+            <li>Built revenue expansion and account plans against monthly KPIs.</li>
+            <li><b>Top 10%</b> of network — sales Tactical Challenge, Jun & Jul 2020.</li>
+            <li><b>Top 1 producer</b> in cluster sales, Feb 2021.</li>
+            <li>Maintained 99% on OCBC service standard metric.</li>
+          </ul>
+          <button type="button" class="flip-toggle" aria-label="About OCBC">i</button>
+        </div>
+        <div class="flip-face flip-face--back">
+          <div class="back__head">
+            <span class="card__logo card__logo--lg" data-domain="ocbc.com" data-letter="O" data-bg="#c8102e"></span>
+            <div>
+              <h4>About OCBC</h4>
+              <span class="back__meta">Banking & Wealth Management · HQ Singapore · Founded 1932</span>
+            </div>
+          </div>
+          <p class="back__desc">OCBC is the second-largest financial services group in Southeast Asia by assets, with operations in over 19 markets. The bank delivers consumer, wealth, and corporate banking — recognised globally for its strength, reliability, and long-standing presence across the region.</p>
+          <div class="back__industry">
+            <span>Banking</span><span>Wealth Management</span><span>SEA</span><span>Consumer + Corporate</span>
+          </div>
+          <button type="button" class="flip-toggle" aria-label="Back to role">←</button>
+        </div>
       </div>
-      <ul>
-        <li>Drove growth in customer Assets Under Management.</li>
-        <li>Built revenue expansion and account plans against monthly KPIs.</li>
-        <li><b>Top 10%</b> of network — sales Tactical Challenge, Jun & Jul 2020.</li>
-        <li><b>Top 1 producer</b> in cluster sales, Feb 2021.</li>
-        <li>Maintained 99% on OCBC service standard metric.</li>
-      </ul>
     </div>
   </article>
 </section>

@@ -1,5 +1,26 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* ---------- LOGO HYDRATION ----------
+   Each .card__logo has data-domain (Clearbit) + data-letter + data-bg fallback. */
+document.querySelectorAll(".card__logo[data-domain]").forEach((el) => {
+  const domain = el.dataset.domain;
+  const letter = el.dataset.letter || "?";
+  const bg = el.dataset.bg || "#0a0a0a";
+  const img = new Image();
+  img.alt = domain;
+  img.referrerPolicy = "no-referrer";
+  img.onload = () => {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.appendChild(img);
+  };
+  img.onerror = () => {
+    el.classList.add("has-fallback");
+    el.style.background = bg;
+    el.textContent = letter;
+  };
+  img.src = `https://logo.clearbit.com/${domain}`;
+});
+
 /* ---------- HERO INTRO ---------- */
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
 heroTl
@@ -21,14 +42,10 @@ document.querySelectorAll(".metric__num").forEach((el) => {
   const isFloat = num.includes(".");
   const counter = { v: 0 };
   ScrollTrigger.create({
-    trigger: el,
-    start: "top 90%",
-    once: true,
+    trigger: el, start: "top 90%", once: true,
     onEnter: () => {
       gsap.to(counter, {
-        v: target,
-        duration: 1.6,
-        ease: "power2.out",
+        v: target, duration: 1.6, ease: "power2.out",
         onUpdate: () => {
           const v = isFloat ? counter.v.toFixed(1) : Math.round(counter.v);
           el.textContent = `${prefix}${v}${suffix}`;
@@ -44,7 +61,23 @@ gsap.from(".intro .kicker, .intro__title, .intro__sub", {
   y: 40, opacity: 0, duration: 1, stagger: 0.12, ease: "power3.out",
 });
 
-/* ---------- BRANCHED TIMELINE SLIDER ---------- */
+/* ---------- FLIP ---------- */
+document.querySelectorAll(".flip-toggle").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const flippable = btn.closest(".flippable");
+    if (flippable) flippable.classList.toggle("flipped");
+  });
+});
+
+document.querySelectorAll(".t-card.flippable").forEach((card) => {
+  card.addEventListener("click", (e) => {
+    if (e.target.closest(".flip-toggle")) return;
+    card.classList.toggle("flipped");
+  });
+});
+
+/* ---------- BRANCHED TIMELINE — STACK INTERACTION ---------- */
 const stage = document.querySelector(".branch-stage");
 const stack = document.getElementById("cardStack");
 const cards = stack ? stack.querySelectorAll(".role-card") : [];
@@ -55,26 +88,27 @@ function setActive(i) {
   stage.dataset.active = String(i);
   cards.forEach((c, ci) => {
     c.classList.toggle("is-back", ci !== i);
-    // bring active card to top of stack
     c.style.zIndex = ci === i ? 2 : 1;
+    if (ci !== i) c.classList.remove("flipped");
   });
 }
 
 if (cards.length) {
-  // click on the back card to bring it forward
   cards.forEach((c, ci) => {
     c.addEventListener("click", (e) => {
+      if (e.target.closest(".flip-toggle")) return;
       if (c.classList.contains("is-back") && !c.classList.contains("dragging")) {
         setActive(ci);
       }
     });
   });
 
-  // drag the active card sideways to swap
   let startX = 0, dragging = false, currentCard = null;
   stack.addEventListener("pointerdown", (e) => {
+    if (e.target.closest(".flip-toggle")) return;
     const target = e.target.closest(".role-card");
     if (!target || target.classList.contains("is-back")) return;
+    if (target.classList.contains("flipped")) return;
     dragging = true;
     currentCard = target;
     startX = e.clientX;
@@ -93,7 +127,6 @@ if (cards.length) {
     currentCard.classList.remove("dragging");
     currentCard.style.transform = "";
     if (Math.abs(dx) > 90) {
-      // swap to the other card
       const next = (active + 1) % cards.length;
       setActive(next);
     }
@@ -111,7 +144,7 @@ gsap.from(".concurrent__header > *, .branch-stage", {
   y: 40, opacity: 0, duration: 1, stagger: 0.12, ease: "power3.out",
 });
 
-/* animate the merged trunk drawing in as you scroll past */
+/* draw the merged trunk on scroll */
 const merge = document.querySelector(".rail-merge");
 if (merge) {
   const len = merge.getTotalLength();
@@ -185,8 +218,6 @@ gsap.from(".edu", {
   scrollTrigger: { trigger: ".edu__grid", start: "top 80%" },
   y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
 });
-
-/* TOOLBELT — fromTo so chips are guaranteed visible at the end (no hidden state if trigger misfires) */
 gsap.fromTo(
   ".tools__list span",
   { y: 14, opacity: 0 },
@@ -195,7 +226,6 @@ gsap.fromTo(
     y: 0, opacity: 1, duration: 0.5, stagger: 0.02, ease: "power2.out",
   }
 );
-
 gsap.from(".foot__title, .foot__meta", {
   scrollTrigger: { trigger: ".foot", start: "top 75%" },
   y: 30, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out",
@@ -212,5 +242,4 @@ document.querySelectorAll('.nav__links a[href^="#"]').forEach((a) => {
   });
 });
 
-/* refresh ScrollTrigger after fonts/layout settle */
 window.addEventListener("load", () => ScrollTrigger.refresh());

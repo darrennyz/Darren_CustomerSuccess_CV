@@ -153,42 +153,96 @@ body::before{
 /* Card stack */
 .card-stack{
   position:relative;
-  height:560px;
+  height:600px;
   max-width:680px;
   margin:0 auto;
   z-index:2;
-  perspective:1400px;
 }
 .role-card{
   position:absolute;inset:0;
-  background:#fff;
-  border:1px solid var(--line-2);border-radius:22px;
-  padding:36px;
-  display:flex;flex-direction:column;gap:22px;
-  box-shadow:0 30px 80px -30px rgba(10,10,10,.18), 0 8px 20px -8px rgba(10,10,10,.08);
+  border-radius:22px;
   transition: transform .8s cubic-bezier(.86,0,.07,1), opacity .6s, box-shadow .6s;
-  transform-style:preserve-3d;
   cursor:grab;
   user-select:none;
 }
 .role-card.is-back{
   transform: translate(60px, 28px) rotate(4.5deg) scale(.94);
-  opacity:.85;
-  box-shadow:0 12px 30px -10px rgba(10,10,10,.12);
+  opacity:.92;
   cursor:pointer;
 }
-/* Gradient peek overlay on the back card */
-.role-card.is-back::after{
-  content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;
-  background:linear-gradient(225deg, transparent 30%, rgba(245,236,219,0.5) 75%, rgba(245,236,219,0.85) 100%);
-}
-.role-card.is-back .card__list, .role-card.is-back .card__tags{filter:blur(.4px);opacity:.85}
-
 .role-card[data-i="1"].is-back{
   transform: translate(-60px, 28px) rotate(-4.5deg) scale(.94);
 }
-
+/* Peek gradient overlay on back-card front face */
+.role-card.is-back .flip-face--front::after{
+  content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;
+  background:linear-gradient(225deg, transparent 28%, rgba(245,236,219,0.45) 70%, rgba(245,236,219,0.78) 100%);
+}
+.role-card[data-i="1"].is-back .flip-face--front::after{
+  background:linear-gradient(135deg, transparent 28%, rgba(245,236,219,0.45) 70%, rgba(245,236,219,0.78) 100%);
+}
 .role-card.dragging{transition:none;cursor:grabbing}
+
+/* ----------  FLIP SYSTEM (works for stack + timeline cards)  ---------- */
+.flippable{ perspective: 1600px; }
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  display:grid;
+  transition: transform .9s cubic-bezier(.86,0,.07,1);
+  transform-style:preserve-3d;
+}
+.flippable.flipped > .flip-inner{ transform: rotateY(180deg); }
+.flip-face{
+  grid-area:1/1;
+  background:#fff;
+  border:1px solid var(--line-2);
+  border-radius:22px;
+  padding:36px;
+  display:flex;flex-direction:column;gap:18px;
+  box-shadow:0 30px 80px -30px rgba(10,10,10,.18), 0 8px 20px -8px rgba(10,10,10,.08);
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  position:relative;
+  overflow:hidden;
+}
+.flip-face--back{ transform: rotateY(180deg); }
+
+.flip-toggle{
+  position:absolute;top:18px;right:18px;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--line-2);
+  color:var(--ink);cursor:pointer;
+  font-family:var(--serif);font-size:18px;font-style:italic;
+  display:grid;place-items:center;
+  transition:all .2s;z-index:5;
+}
+.flip-toggle:hover{ background:var(--accent);color:#fff;border-color:var(--accent); }
+.flip-face--back .flip-toggle{ font-family:var(--sans);font-size:14px;font-style:normal; }
+
+/* Back face content */
+.back__head{display:flex;gap:16px;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.back__head h4{font-size:22px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.back__meta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.back__desc{font-size:15px;color:var(--ink-2);line-height:1.65}
+.back__industry{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:14px;border-top:1px dashed var(--line)}
+.back__industry span{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  border:1px solid var(--line-2);padding:5px 10px;border-radius:6px;color:var(--ink-2);
+  background:var(--bg);
+}
+
+/* ----------  LOGO  ---------- */
+.card__logo{
+  width:54px;height:54px;border-radius:12px;
+  background:#fff;border:1px solid var(--line-2);
+  display:grid;place-items:center;overflow:hidden;
+  font-family:var(--serif);font-size:30px;color:var(--ink);
+  flex-shrink:0;
+}
+.card__logo img{width:100%;height:100%;object-fit:cover;display:block}
+.card__logo--lg{width:64px;height:64px;border-radius:14px;font-size:34px}
+.card__logo--sm{width:44px;height:44px;border-radius:10px;font-size:24px}
+.card__logo.has-fallback{color:#fff;font-weight:600;font-family:var(--sans);font-size:22px}
 
 .card__top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
 .card__co{display:flex;gap:16px;align-items:center}
@@ -254,15 +308,16 @@ body::before{
   border:2px solid var(--accent);z-index:2;
 }
 .t-card{
-  border:1px solid var(--line);border-radius:var(--r);padding:32px;
-  background:#fff;
-  box-shadow:0 14px 40px -20px rgba(10,10,10,.12);
-  transition:all .4s;
+  border-radius:var(--r);
+  transition: transform .4s;
 }
-.t-card:hover{transform:translateY(-2px);box-shadow:0 20px 50px -20px rgba(10,10,10,.18)}
-.t-card__head{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.t-card:hover{transform:translateY(-2px)}
+.t-card__head{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
 .t-card__head h3{font-size:22px;font-weight:600;letter-spacing:-.01em}
-.t-card__role{color:var(--ink-2);font-size:14px}
+.t-card__role{color:var(--ink-2);font-size:14px;margin-top:2px}
+.t-card__title{display:flex;gap:14px;align-items:center}
+.t-item[data-side="left"] .t-card__title{flex-direction:row-reverse}
+.t-item[data-side="left"] .t-card__title > div{text-align:right}
 .t-card ul{list-style:none;display:flex;flex-direction:column;gap:12px}
 .t-card ul li{position:relative;padding-left:22px;color:var(--ink-2);font-size:14.5px;line-height:1.6}
 .t-card ul li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:1px;background:var(--ink-3)}
