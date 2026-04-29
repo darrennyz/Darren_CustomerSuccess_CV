@@ -285,12 +285,22 @@ body::before{
 .branch-stage[data-active="1"] .stack-cue__count span:nth-child(2){background:var(--accent)}
 
 @media (max-width:780px){
-  .branch-stage{min-height:auto}
-  .card-stack{height:auto;display:flex;flex-direction:column;gap:14px}
-  .role-card{position:relative;inset:auto}
-  .role-card.is-back{transform:none;opacity:1}
-  .role-card.is-back::after{display:none}
-  .branch-rail{display:none}
+  /* Keep the layered stack on mobile — just shrink offsets, scale, and padding */
+  .branch-stage{min-height:auto;padding:40px 0 20px}
+  .card-stack{height:720px;max-width:100%}
+  .role-card.is-back{ transform: translate(28px, 22px) rotate(3deg) scale(.95); }
+  .role-card[data-i="1"].is-back{ transform: translate(-28px, 22px) rotate(-3deg) scale(.95); }
+  .flip-face{ padding:24px; gap:14px; border-radius:18px }
+  .role-card{ border-radius:18px }
+  .card__top{ gap:14px }
+  .card__co{ gap:12px }
+  .card__co h3{ font-size:19px }
+  .card__role{ font-size:13px }
+  .card__list li{ font-size:13.5px }
+  .card__logo{ width:46px;height:46px;border-radius:10px }
+  .flip-toggle{ width:30px;height:30px;top:14px;right:14px }
+  .branch-rail{ display:none }
+  .stack-cue{ bottom:-32px;font-size:10px }
 }
 
 /* ----------  TIMELINE  ---------- */
