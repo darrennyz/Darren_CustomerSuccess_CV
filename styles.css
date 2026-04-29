@@ -49,12 +49,16 @@ body::before{
 /* Mode toggle (9-6 / 6-9) */
 .mode-toggle{
   position:relative;
-  display:inline-flex;align-items:stretch;
+  display:inline-grid;grid-template-columns:1fr 1fr;
   background:rgba(255,255,255,.6);
   border:1px solid var(--line-2);
   border-radius:999px;
   padding:3px;
   font-family:var(--mono);
+}
+body[data-mode="afterhours"] .mode-toggle{
+  background:rgba(244,241,234,.06);
+  border-color:rgba(244,241,234,.18);
 }
 .mode-toggle__thumb{
   position:absolute;
@@ -62,23 +66,27 @@ body::before{
   width:calc(50% - 3px);
   background:var(--ink);
   border-radius:999px;
-  transition: transform .55s cubic-bezier(.86,0,.07,1);
+  transition: transform .55s cubic-bezier(.86,0,.07,1), background .4s;
   z-index:1;
 }
+body[data-mode="afterhours"] .mode-toggle__thumb{ background:var(--accent); }
 .mode-toggle[data-mode="afterhours"] .mode-toggle__thumb{ transform:translateX(100%); }
 .mode-toggle__btn{
   position:relative;z-index:2;
   background:transparent;border:none;
-  padding:6px 16px;
+  padding:7px 18px;
   border-radius:999px;
   color:var(--ink-2);cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:1px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
   transition: color .35s;
   font:inherit;
+  min-width:96px;
+  white-space:nowrap;
 }
 .mode-toggle__btn.is-active{ color:#fff }
+body[data-mode="afterhours"] .mode-toggle__btn.is-active{ color:#0a0a0a }
 .mode-toggle__time{ font-size:12px;letter-spacing:.06em;font-weight:600 }
-.mode-toggle__sub{ font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.7 }
+.mode-toggle__sub{ font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.7 }
 
 /* View visibility */
 [data-view="work"], [data-view="afterhours"]{ display:none }
@@ -499,3 +507,100 @@ body[data-mode="afterhours"]::before{
 .foot__title{font-size:clamp(36px,5.2vw,72px);font-weight:500;letter-spacing:-.03em;line-height:1.05;margin-bottom:60px}
 .foot__title em{color:var(--accent)}
 .foot__meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding-top:32px;border-top:1px solid var(--line);flex-wrap:wrap;gap:12px}
+
+/* ==========================================================
+   AFTERHOURS — DARK MODE + SIMPLIFIED HERO
+   ========================================================== */
+
+/* Dark token overrides */
+body[data-mode="afterhours"]{
+  --bg: #0c0e15;
+  --bg-2: #14171f;
+  --bg-3: #1c2030;
+  --ink: #f4f1ea;
+  --ink-2: #b9b6ae;
+  --ink-3: #6e6b66;
+  --line: rgba(244,241,234,0.08);
+  --line-2: rgba(244,241,234,0.16);
+  --accent: #a5a8e8;
+  --accent-2: #ff9a6b;
+  background:var(--bg);color:var(--ink);
+}
+body[data-mode="afterhours"]::before{
+  background:
+    radial-gradient(900px 600px at 85% -5%, rgba(165,168,232,0.18), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgba(255,154,107,0.10), transparent 60%);
+  mix-blend-mode:screen;
+}
+body[data-mode="afterhours"] .nav{
+  background:rgba(12,14,21,.72);
+  border-bottom-color:var(--line);
+}
+body[data-mode="afterhours"] .nav__dot{ background:var(--accent) }
+
+/* Cards / panels in dark */
+body[data-mode="afterhours"] .flip-face,
+body[data-mode="afterhours"] .edu,
+body[data-mode="afterhours"] .passion,
+body[data-mode="afterhours"] .role-card,
+body[data-mode="afterhours"] .hero__skills{
+  background:var(--bg-3);
+  border-color:var(--line-2);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.6), 0 8px 20px -8px rgba(0,0,0,.3);
+}
+body[data-mode="afterhours"] .role-card{ background:transparent }
+body[data-mode="afterhours"] .card__logo{ background:var(--bg-2);border-color:var(--line-2) }
+body[data-mode="afterhours"] .card__logo img{ background:transparent }
+body[data-mode="afterhours"] .chip,
+body[data-mode="afterhours"] .card__tags span,
+body[data-mode="afterhours"] .back__industry span,
+body[data-mode="afterhours"] .passion__tags span,
+body[data-mode="afterhours"] .tools__list span{
+  background:var(--bg-2);border-color:var(--line-2);color:var(--ink-2);
+}
+body[data-mode="afterhours"] .flip-toggle{ background:var(--bg-2);border-color:var(--line-2);color:var(--ink) }
+body[data-mode="afterhours"] .flip-toggle:hover{ background:var(--accent);color:#0a0a0a;border-color:var(--accent) }
+
+body[data-mode="afterhours"] .role-card.is-back .flip-face--front::after{
+  background:linear-gradient(225deg, transparent 28%, rgba(12,14,21,0.55) 70%, rgba(12,14,21,0.85) 100%);
+}
+body[data-mode="afterhours"] .role-card[data-i="1"].is-back .flip-face--front::after{
+  background:linear-gradient(135deg, transparent 28%, rgba(12,14,21,0.55) 70%, rgba(12,14,21,0.85) 100%);
+}
+
+body[data-mode="afterhours"] .branch-rail .rail-merge{ stroke:var(--ink) }
+body[data-mode="afterhours"] .branch-rail .node-merge{ fill:var(--ink) }
+body[data-mode="afterhours"] .timeline__rail{ background:var(--line) }
+body[data-mode="afterhours"] .t-dot{ background:var(--bg-3);border-color:var(--accent) }
+
+body[data-mode="afterhours"] .foot{
+  background:linear-gradient(180deg, transparent, rgba(165,168,232,.08));
+  border-top-color:var(--line);
+}
+body[data-mode="afterhours"] .education{ border-top-color:var(--line) }
+
+body[data-mode="afterhours"] .passion__sub{ color:var(--accent) }
+body[data-mode="afterhours"] .exploring__lbl{ color:var(--accent-2) }
+body[data-mode="afterhours"] .exploring__list{ border-top-color:var(--line) }
+body[data-mode="afterhours"] .exploring__list li{ border-bottom-color:var(--line) }
+
+body[data-mode="afterhours"] .hero--afterhours .hero__title em{ color:var(--accent-2) }
+body[data-mode="afterhours"] .pulse--warm{ background:var(--accent-2) }
+body[data-mode="afterhours"] .pulse--warm::after{ border-color:var(--accent-2) }
+
+/* Simplified afterhours hero - centred, no metrics, no aside */
+.hero--afterhours{
+  display:flex;flex-direction:column;justify-content:center;
+  min-height:90vh;padding:140px 36px 80px;
+}
+.hero--afterhours__inner{
+  max-width:880px;margin:0 auto;text-align:left;
+}
+.hero__title--ah{ font-size:clamp(56px, 9vw, 132px);line-height:.95;letter-spacing:-0.04em;margin-bottom:40px }
+.hero__lede--ah{ font-size:20px;max-width:640px;color:var(--ink-2) }
+.hero__lede--ah b{ color:var(--ink);font-weight:600 }
+@media (max-width:780px){
+  .hero--afterhours{ padding:120px 24px 60px;min-height:auto }
+  .hero__title--ah{ font-size:clamp(44px,11vw,72px) }
+  .hero__lede--ah{ font-size:17px }
+}
