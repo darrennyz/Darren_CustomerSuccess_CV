@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-mode="work">
 
 <!-- NAV -->
 <nav class="nav">
@@ -20,6 +20,19 @@
     <span class="nav__dot"></span>
     <span class="nav__name">Darren Ng</span>
   </div>
+
+  <div class="mode-toggle" data-mode="work" role="group" aria-label="Switch between work hours and after hours">
+    <span class="mode-toggle__thumb" aria-hidden="true"></span>
+    <button type="button" class="mode-toggle__btn is-active" data-mode="work">
+      <span class="mode-toggle__time">9 — 6</span>
+      <span class="mode-toggle__sub">work</span>
+    </button>
+    <button type="button" class="mode-toggle__btn" data-mode="afterhours">
+      <span class="mode-toggle__time">6 — 9</span>
+      <span class="mode-toggle__sub">after hours</span>
+    </button>
+  </div>
+
   <div class="nav__links">
     <a href="#summary">Summary</a>
     <a href="#timeline">Experience</a>
@@ -28,7 +41,7 @@
 </nav>
 
 <!-- HERO -->
-<section id="summary" class="hero">
+<section id="summary" class="hero" data-view="work">
   <div class="hero__grid">
     <div class="hero__main">
       <div class="hero__eyebrow">
@@ -84,7 +97,7 @@
 </section>
 
 <!-- TIMELINE INTRO -->
-<section class="intro">
+<section class="intro" data-view="work">
   <div class="intro__inner">
     <span class="kicker">02 — Career path</span>
     <h2 class="intro__title">A track record built on retention, expansion, and adoption.</h2>
@@ -93,7 +106,7 @@
 </section>
 
 <!-- CONCURRENT — Branched timeline as the slider -->
-<section id="timeline" class="concurrent">
+<section id="timeline" class="concurrent" data-view="work">
   <div class="concurrent__header">
     <div class="period">
       <span class="period__year">2025 → Present</span>
@@ -205,7 +218,7 @@
 </section>
 
 <!-- TIMELINE CONTINUED -->
-<section class="timeline">
+<section class="timeline" data-view="work">
   <div class="timeline__rail"><div class="timeline__line"></div></div>
 
   <article class="t-item" data-side="left">
@@ -338,6 +351,128 @@
       </div>
     </div>
   </article>
+</section>
+
+<!-- AFTERHOURS HERO -->
+<section class="hero hero--afterhours" data-view="afterhours">
+  <div class="hero__grid">
+    <div class="hero__main">
+      <div class="hero__eyebrow">
+        <span class="pulse pulse--warm"></span>
+        After 6pm · off the clock
+      </div>
+      <h1 class="hero__title">
+        Curious cook,<br/>
+        <em>vibe coder,</em><br/>
+        student of AI.
+      </h1>
+      <p class="hero__lede">
+        My evenings live at the intersection of <b>craft</b> and <b>code</b> — slow cooking,
+        building small things with Claude, and going deeper on the AI stack I work with by day.
+      </p>
+      <div class="hero__metrics">
+        <div class="metric"><div class="metric__num">20+</div><div class="metric__label">Side projects<br/>vibe-coded</div></div>
+        <div class="metric"><div class="metric__num">365</div><div class="metric__label">Days deep<br/>into AI study</div></div>
+        <div class="metric"><div class="metric__num metric__num--static">∞</div><div class="metric__label">Recipes attempted<br/>(mostly successful)</div></div>
+        <div class="metric"><div class="metric__num">3</div><div class="metric__label">Cuisines<br/>in current rotation</div></div>
+      </div>
+    </div>
+
+    <aside class="hero__skills">
+      <div class="skills__head">
+        <span class="skills__kicker">After hours</span>
+        <span class="skills__hint">scroll ↓</span>
+      </div>
+      <div class="skills__group">
+        <h4>In the kitchen</h4>
+        <p>Regional Asian comfort food · Slow braises · Knife work · Hawker hunts on weekends</p>
+      </div>
+      <div class="skills__group">
+        <h4>At the keyboard</h4>
+        <p>Vibe coding with Claude · Side projects · Prototypes · This very CV site</p>
+      </div>
+      <div class="skills__group">
+        <h4>Down the rabbit hole</h4>
+        <p>LLM internals · Agents & MCP · Anthropic Education track · Applied AI patterns</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="hero__scroll">
+    <span class="line"></span>
+    <span>The off-hours stack</span>
+  </div>
+</section>
+
+<!-- PASSIONS -->
+<section class="passions" data-view="afterhours">
+  <div class="passions__head">
+    <span class="kicker">02 — Outside work</span>
+    <h2 class="passions__title">Three things I keep coming back to.</h2>
+  </div>
+
+  <div class="passions__grid">
+    <article class="passion">
+      <div class="passion__num">01</div>
+      <h3>Cooking</h3>
+      <p class="passion__sub">Slow weekends · weeknight experiments</p>
+      <p class="passion__desc">From regional Asian comfort food to fresh attempts at unfamiliar cuisines — the kitchen is where I unplug. Practising knife work, plating, and the patience of long braises.</p>
+      <div class="passion__tags">
+        <span>Hawker classics</span><span>Sichuan</span><span>Slow braises</span><span>Knife work</span>
+      </div>
+    </article>
+
+    <article class="passion">
+      <div class="passion__num">02</div>
+      <h3>Vibe coding</h3>
+      <p class="passion__sub">Claude as collaborator</p>
+      <p class="passion__desc">Building small useful things — tools, prototypes, this very CV. The loop of describing intent and watching working code emerge feels like the future of software craftsmanship.</p>
+      <div class="passion__tags">
+        <span>Claude Code</span><span>Vercel</span><span>Supabase</span><span>Railway</span>
+      </div>
+    </article>
+
+    <article class="passion">
+      <div class="passion__num">03</div>
+      <h3>Learning AI</h3>
+      <p class="passion__sub">From fluency to fluent practitioner</p>
+      <p class="passion__desc">Reading papers, completing the Anthropic Education track, and following the latest in agents, MCP, and applied AI. Curiosity that compounds every week.</p>
+      <div class="passion__tags">
+        <span>Anthropic Education</span><span>MCP</span><span>Agentic patterns</span><span>Applied AI</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CURRENTLY EXPLORING -->
+<section class="exploring" data-view="afterhours">
+  <div class="exploring__inner">
+    <span class="kicker">03 — Currently exploring</span>
+    <h2 class="exploring__title">On the bench <em>this season.</em></h2>
+
+    <ul class="exploring__list">
+      <li>
+        <span class="exploring__lbl">Course</span>
+        <h4>Building with the Claude API</h4>
+        <p>Anthropic Education — beyond chat: tools, caching, batch, and structured agentic flows.</p>
+      </li>
+      <li>
+        <span class="exploring__lbl">Pattern</span>
+        <h4>Model-Context-Protocol</h4>
+        <p>Composing MCP servers and clients for real workflows — process chatbots, document agents, codified company context.</p>
+      </li>
+      <li>
+        <span class="exploring__lbl">Stack</span>
+        <h4>Vibe coding pipeline</h4>
+        <p>Claude Code → GitHub → Vercel/Railway → Supabase. End-to-end shipping in an evening.</p>
+      </li>
+      <li>
+        <span class="exploring__lbl">Kitchen</span>
+        <h4>Sichuan, properly</h4>
+        <p>Mastering mala balance, dry-frying, and getting the wok hei right at home.</p>
+      </li>
+    </ul>
+  </div>
 </section>
 
 <!-- EDUCATION -->

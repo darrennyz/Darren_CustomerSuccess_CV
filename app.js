@@ -1,5 +1,22 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* ---------- MODE TOGGLE (9-6 work / 6-9 afterhours) ---------- */
+const modeToggle = document.querySelector(".mode-toggle");
+const modeBtns = document.querySelectorAll(".mode-toggle__btn");
+function setMode(mode) {
+  document.body.dataset.mode = mode;
+  if (modeToggle) modeToggle.dataset.mode = mode;
+  modeBtns.forEach((b) => b.classList.toggle("is-active", b.dataset.mode === mode));
+  // settle layout, then refresh ScrollTrigger and bring user to top of section
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    ScrollTrigger.refresh();
+  });
+}
+modeBtns.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+// initial mode
+document.body.dataset.mode = document.body.dataset.mode || "work";
+
 /* ---------- LOGO HYDRATION ----------
    Try a chain of public logo sources. On all-fail, paint a colored letter tile. */
 function hydrateLogo(el) {
