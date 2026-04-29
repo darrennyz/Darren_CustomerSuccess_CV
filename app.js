@@ -1,25 +1,38 @@
 gsap.registerPlugin(ScrollTrigger);
 
 /* ---------- LOGO HYDRATION ----------
-   Each .card__logo has data-domain (Clearbit) + data-letter + data-bg fallback. */
-document.querySelectorAll(".card__logo[data-domain]").forEach((el) => {
+   Try a chain of public logo sources. On all-fail, paint a colored letter tile. */
+function hydrateLogo(el) {
   const domain = el.dataset.domain;
   const letter = el.dataset.letter || "?";
   const bg = el.dataset.bg || "#0a0a0a";
+  const sources = [
+    `https://logo.clearbit.com/${domain}`,
+    `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+    `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+  ];
+  let i = 0;
   const img = new Image();
   img.alt = domain;
   img.referrerPolicy = "no-referrer";
   img.onload = () => {
+    if (img.naturalWidth < 16) return img.onerror();
     while (el.firstChild) el.removeChild(el.firstChild);
     el.appendChild(img);
   };
   img.onerror = () => {
-    el.classList.add("has-fallback");
-    el.style.background = bg;
-    el.textContent = letter;
+    i += 1;
+    if (i < sources.length) {
+      img.src = sources[i];
+    } else {
+      el.classList.add("has-fallback");
+      el.style.background = bg;
+      el.textContent = letter;
+    }
   };
-  img.src = `https://logo.clearbit.com/${domain}`;
-});
+  img.src = sources[0];
+}
+document.querySelectorAll(".card__logo[data-domain]").forEach(hydrateLogo);
 
 /* ---------- HERO INTRO ---------- */
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -94,6 +107,9 @@ function setActive(i) {
 }
 
 if (cards.length) {
+  // initialize stack ordering so Nintex (i=0) sits on top by default
+  setActive(0);
+
   cards.forEach((c, ci) => {
     c.addEventListener("click", (e) => {
       if (e.target.closest(".flip-toggle")) return;
