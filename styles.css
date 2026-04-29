@@ -88,12 +88,11 @@ body[data-mode="afterhours"] .mode-toggle__btn.is-active{ color:#0a0a0a }
 .mode-toggle__time{ font-size:12px;letter-spacing:.06em;font-weight:600 }
 .mode-toggle__sub{ font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.7 }
 
-/* View visibility */
-[data-view="work"], [data-view="afterhours"]{ display:none }
-body[data-mode="work"] [data-view="work"]{ display:block }
-body[data-mode="afterhours"] [data-view="afterhours"]{ display:block }
-body[data-mode="work"] .hero[data-view="work"]{ display:flex }
-body[data-mode="afterhours"] .hero[data-view="afterhours"]{ display:flex }
+/* View visibility — hide the inactive view outright, regardless of element type.
+   !important here is intentional: the .hero base rule sets display:flex with equal
+   specificity and would otherwise win. */
+body[data-mode="work"]      [data-view="afterhours"]{ display:none !important }
+body[data-mode="afterhours"] [data-view="work"]     { display:none !important }
 
 /* mode body tint — subtle warmth shift for afterhours */
 body[data-mode="afterhours"]::before{
@@ -596,11 +595,44 @@ body[data-mode="afterhours"] .pulse--warm::after{ border-color:var(--accent-2) }
 .hero--afterhours__inner{
   max-width:880px;margin:0 auto;text-align:left;
 }
-.hero__title--ah{ font-size:clamp(56px, 9vw, 132px);line-height:.95;letter-spacing:-0.04em;margin-bottom:40px }
-.hero__lede--ah{ font-size:20px;max-width:640px;color:var(--ink-2) }
+.hero__title--ah{ font-size:clamp(44px, 6.6vw, 96px);line-height:1;letter-spacing:-0.035em;margin-bottom:32px;font-weight:500 }
+.hero__lede--ah{ font-size:18px;max-width:580px;color:var(--ink-2) }
 .hero__lede--ah b{ color:var(--ink);font-weight:600 }
 @media (max-width:780px){
   .hero--afterhours{ padding:120px 24px 60px;min-height:auto }
-  .hero__title--ah{ font-size:clamp(44px,11vw,72px) }
-  .hero__lede--ah{ font-size:17px }
+  .hero__title--ah{ font-size:clamp(38px,9vw,60px) }
+  .hero__lede--ah{ font-size:16px }
 }
+
+/* ----------  THEME TRANSITION  ----------
+   Animate the colour-related properties on every surface that re-skins between
+   work (light) and afterhours (dark). Layout properties are excluded so the
+   view swap stays instant. */
+html, body,
+.nav, .nav__dot, .nav__name,
+.flip-face, .role-card, .t-card, .edu, .passion, .hero__skills,
+.chip, .card__tags span, .back__industry span, .passion__tags span,
+.tools__list span, .card__logo, .flip-toggle,
+.timeline__rail, .timeline__line, .t-dot,
+.foot, .education, .mode-toggle, .mode-toggle__thumb, .mode-toggle__btn,
+.hero__eyebrow, .skills__group, .skills__group h4, .skills__group p,
+.exploring__list, .exploring__list li, .exploring__lbl, .passion__sub,
+.intro__title, .intro__sub, .hero__title em, .hero__lede,
+.metric__num, .metric__label, .kicker, .period__year, .period__label,
+.t-card__head h3, .t-card__role, .card__co h3, .card__role,
+.back__head h4, .back__meta, .back__desc{
+  transition:
+    background-color .55s ease,
+    border-color .55s ease,
+    color .55s ease,
+    fill .55s ease,
+    stroke .55s ease,
+    box-shadow .55s ease;
+}
+
+/* Branch rail SVG strokes also animate */
+.branch-rail path, .branch-rail circle{
+  transition: stroke .55s ease, fill .55s ease;
+}
+
+body::before{ transition: background .55s ease }
