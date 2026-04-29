@@ -92,86 +92,83 @@
   </div>
 </section>
 
-<!-- CONCURRENT SLIDER -->
+<!-- CONCURRENT — Branched timeline as the slider -->
 <section id="timeline" class="concurrent">
-  <div class="concurrent__rail">
-    <div class="rail__node rail__node--top"></div>
-    <div class="rail__line"></div>
-  </div>
-
   <div class="concurrent__header">
     <div class="period">
       <span class="period__year">2025 → Present</span>
       <span class="period__label">Two concurrent roles</span>
     </div>
-
-    <div class="slider-control">
-      <button class="sc-btn" data-dir="-1" aria-label="Previous">←</button>
-      <div class="sc-track">
-        <span class="sc-dot active" data-i="0"></span>
-        <span class="sc-dot" data-i="1"></span>
-      </div>
-      <button class="sc-btn" data-dir="1" aria-label="Next">→</button>
-    </div>
+    <p class="period__hint">Drag the card sideways — or tap the role behind — to switch which branch of the timeline is in focus.</p>
   </div>
 
-  <div class="slider" id="slider">
-    <div class="slider__viewport">
-      <div class="slider__track">
+  <div class="branch-stage" data-active="0">
+    <!-- Branched rail SVG: two top branches converge to a single line -->
+    <svg class="branch-rail" viewBox="0 0 800 760" preserveAspectRatio="none" aria-hidden="true">
+      <!-- Left branch: from top-left, curves down and into the merge -->
+      <path class="rail-left"  d="M 200,0 C 200,180 400,260 400,400" />
+      <!-- Right branch -->
+      <path class="rail-right" d="M 600,0 C 600,180 400,260 400,400" />
+      <!-- Merged trunk continues down -->
+      <path class="rail-merge" d="M 400,400 L 400,760" />
+      <!-- Branch endpoint nodes -->
+      <circle class="node node-l" cx="200" cy="0" r="6" />
+      <circle class="node node-r" cx="600" cy="0" r="6" />
+      <!-- Merge node -->
+      <circle class="node node-merge" cx="400" cy="400" r="6" fill="#0a0a0a" stroke="none" />
+    </svg>
 
-        <!-- NINTEX -->
-        <article class="card" data-i="0">
-          <div class="card__top">
-            <div class="card__co">
-              <span class="card__logo">N</span>
-              <div>
-                <h3>Nintex Singapore Pte Ltd</h3>
-                <p class="card__role">Enterprise Customer Success Manager</p>
-              </div>
+    <div class="card-stack" id="cardStack">
+
+      <!-- NINTEX -->
+      <article class="role-card" data-i="0">
+        <div class="card__top">
+          <div class="card__co">
+            <span class="card__logo">N</span>
+            <div>
+              <h3>Nintex Singapore</h3>
+              <p class="card__role">Enterprise Customer Success Manager</p>
             </div>
-            <span class="chip">Apr 2025 — Present</span>
           </div>
-          <ul class="card__list">
-            <li><b>+30% AI adoption</b> avg. via deployed AI workflows: Document Discrepancy Summary, Customer Sentiment Analyzer, Payroll Processing AI Agent, Process Chatbot MCP.</li>
-            <li><b>99.8% Gross Revenue Retention</b> through accurate forecasting and proactive Success Plans.</li>
-            <li><b>USD $1.5M at-risk ARR retained</b> — diagnosing adoption gaps, driving exec alignment, and steering renewal recovery.</li>
-            <li><b>70% of single-year contracts converted to multi-year</b> via aligned value propositions and ROI narratives.</li>
-            <li><b>USD $250K+ expansion revenue</b> generated within first 6 months.</li>
-            <li><b>USD $6M ARR portfolio</b> across top 40 APAC clients, including Global Top 200.</li>
-          </ul>
-          <div class="card__tags"><span>Renewals</span><span>AI Agents</span><span>MCP</span><span>QBRs</span><span>Expansion</span></div>
-        </article>
+          <span class="chip">Apr 2025 — Present</span>
+        </div>
+        <ul class="card__list">
+          <li><b>+30% AI adoption</b> avg. via Document Discrepancy Summary, Customer Sentiment Analyzer, Payroll AI Agent, Process Chatbot MCP.</li>
+          <li><b>99.8% Gross Revenue Retention</b> through accurate forecasting and proactive Success Plans.</li>
+          <li><b>USD $1.5M at-risk ARR retained</b> — diagnosing adoption gaps and steering renewal recovery.</li>
+          <li><b>70% of single-year contracts</b> converted to multi-year via aligned value propositions.</li>
+          <li><b>USD $250K+ expansion</b> within first 6 months · <b>USD $6M ARR portfolio</b>, top 40 APAC.</li>
+        </ul>
+        <div class="card__tags"><span>Renewals</span><span>AI Agents</span><span>MCP</span><span>QBRs</span><span>Expansion</span></div>
+      </article>
 
-        <!-- AVERPS -->
-        <article class="card" data-i="1">
-          <div class="card__top">
-            <div class="card__co">
-              <span class="card__logo">A</span>
-              <div>
-                <h3>Averps Pte Ltd</h3>
-                <p class="card__role">Applied AI Adoption & Enablement Manager</p>
-              </div>
+      <!-- AVERPS -->
+      <article class="role-card is-back" data-i="1">
+        <div class="card__top">
+          <div class="card__co">
+            <span class="card__logo">A</span>
+            <div>
+              <h3>Averps Pte Ltd</h3>
+              <p class="card__role">Applied AI Adoption & Enablement Manager</p>
             </div>
-            <span class="chip">Feb 2025 — Present</span>
           </div>
-          <ul class="card__list">
-            <li>Enabled <b>SME owners and Enterprise clients</b> on applied AI through hands-on sessions for non-technical users.</li>
-            <li>Consulted <b>startup founders on applied AI strategy</b>, co-developing success plans tied to efficiency, output quality, and process automation.</li>
-            <li>Increased <b>product adoption, usage depth, and retention</b> via structured enablement strategies.</li>
-            <li>Evaluated business use cases against the right LLM stack — <b>Claude, ChatGPT, Gemini, Supabase, GitHub, Vercel, Railway</b>.</li>
-          </ul>
-          <div class="card__tags"><span>Enablement</span><span>Applied AI</span><span>Founders</span><span>LLM Stack</span></div>
-        </article>
+          <span class="chip">Feb 2025 — Present</span>
+        </div>
+        <ul class="card__list">
+          <li>Enabled <b>SME owners and Enterprise clients</b> on applied AI through hands-on sessions for non-technical users.</li>
+          <li>Consulted <b>startup founders on applied AI strategy</b>, co-developing success plans tied to measurable outcomes.</li>
+          <li>Increased <b>product adoption, usage depth, and retention</b> via structured enablement strategies.</li>
+          <li>Evaluated use cases against the right LLM stack — <b>Claude, ChatGPT, Gemini, Supabase, GitHub, Vercel, Railway</b>.</li>
+        </ul>
+        <div class="card__tags"><span>Enablement</span><span>Applied AI</span><span>Founders</span><span>LLM Stack</span></div>
+      </article>
 
-      </div>
     </div>
-  </div>
 
-  <div class="merge">
-    <div class="merge__l"></div>
-    <div class="merge__r"></div>
-    <div class="merge__pulse"></div>
-    <span class="merge__label">timelines merge</span>
+    <div class="stack-cue">
+      <div class="stack-cue__count"><span></span><span></span></div>
+      <span>drag · tap to switch</span>
+    </div>
   </div>
 </section>
 

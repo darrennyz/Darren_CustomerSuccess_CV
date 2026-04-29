@@ -11,7 +11,7 @@ heroTl
   .from(".skills__group", { y: 16, opacity: 0, duration: 0.5, stagger: 0.06 }, "-=.6")
   .from(".hero__scroll", { opacity: 0, duration: 0.6 }, "-=.2");
 
-/* ---------- COUNT-UP ---------- */
+/* ---------- COUNT-UP (hero metrics) ---------- */
 document.querySelectorAll(".metric__num").forEach((el) => {
   const txt = el.textContent;
   const match = txt.match(/^([\$\+]?)([\d.]+)(\D*)$/);
@@ -44,60 +44,89 @@ gsap.from(".intro .kicker, .intro__title, .intro__sub", {
   y: 40, opacity: 0, duration: 1, stagger: 0.12, ease: "power3.out",
 });
 
-/* ---------- CONCURRENT SLIDER ---------- */
-const track = document.querySelector(".slider__track");
-const dots = document.querySelectorAll(".sc-dot");
-const btns = document.querySelectorAll(".sc-btn");
-const cards = document.querySelectorAll(".card");
-let idx = 0;
-const total = cards.length;
+/* ---------- BRANCHED TIMELINE SLIDER ---------- */
+const stage = document.querySelector(".branch-stage");
+const stack = document.getElementById("cardStack");
+const cards = stack ? stack.querySelectorAll(".role-card") : [];
+let active = 0;
 
-function go(i) {
-  idx = (i + total) % total;
-  track.style.transform = `translateX(-${idx * 100}%)`;
-  dots.forEach((d, di) => d.classList.toggle("active", di === idx));
+function setActive(i) {
+  active = i;
+  stage.dataset.active = String(i);
   cards.forEach((c, ci) => {
-    gsap.to(c, { scale: ci === idx ? 1 : 0.97, opacity: ci === idx ? 1 : 0.5, duration: 0.6, ease: "power2.out" });
+    c.classList.toggle("is-back", ci !== i);
+    // bring active card to top of stack
+    c.style.zIndex = ci === i ? 2 : 1;
   });
 }
-btns.forEach((b) => b.addEventListener("click", () => go(idx + parseInt(b.dataset.dir))));
-dots.forEach((d) => d.addEventListener("click", () => go(parseInt(d.dataset.i))));
 
-// drag-to-slide
-let startX = 0, dragging = false;
-const vp = document.querySelector(".slider__viewport");
-vp.addEventListener("pointerdown", (e) => { dragging = true; startX = e.clientX; });
-vp.addEventListener("pointerup", (e) => {
-  if (!dragging) return;
-  const dx = e.clientX - startX;
-  if (Math.abs(dx) > 60) go(idx + (dx < 0 ? 1 : -1));
-  dragging = false;
-});
-vp.addEventListener("pointerleave", () => { dragging = false; });
+if (cards.length) {
+  // click on the back card to bring it forward
+  cards.forEach((c, ci) => {
+    c.addEventListener("click", (e) => {
+      if (c.classList.contains("is-back") && !c.classList.contains("dragging")) {
+        setActive(ci);
+      }
+    });
+  });
 
-// reveal slider on scroll
-gsap.from(".concurrent__header, .slider", {
+  // drag the active card sideways to swap
+  let startX = 0, dragging = false, currentCard = null;
+  stack.addEventListener("pointerdown", (e) => {
+    const target = e.target.closest(".role-card");
+    if (!target || target.classList.contains("is-back")) return;
+    dragging = true;
+    currentCard = target;
+    startX = e.clientX;
+    target.classList.add("dragging");
+    target.setPointerCapture(e.pointerId);
+  });
+  stack.addEventListener("pointermove", (e) => {
+    if (!dragging || !currentCard) return;
+    const dx = e.clientX - startX;
+    const rot = dx * 0.04;
+    currentCard.style.transform = `translate(${dx}px, 0) rotate(${rot}deg)`;
+  });
+  const endDrag = (e) => {
+    if (!dragging || !currentCard) return;
+    const dx = (e.clientX || 0) - startX;
+    currentCard.classList.remove("dragging");
+    currentCard.style.transform = "";
+    if (Math.abs(dx) > 90) {
+      // swap to the other card
+      const next = (active + 1) % cards.length;
+      setActive(next);
+    }
+    dragging = false;
+    currentCard = null;
+  };
+  stack.addEventListener("pointerup", endDrag);
+  stack.addEventListener("pointercancel", endDrag);
+  stack.addEventListener("pointerleave", endDrag);
+}
+
+/* reveal concurrent on scroll */
+gsap.from(".concurrent__header > *, .branch-stage", {
   scrollTrigger: { trigger: ".concurrent", start: "top 70%" },
-  y: 50, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out",
+  y: 40, opacity: 0, duration: 1, stagger: 0.12, ease: "power3.out",
 });
 
-/* ---------- MERGE ANIMATION ---------- */
-gsap.fromTo(
-  ".merge__l, .merge__r",
-  { scaleY: 0, opacity: 0 },
-  {
-    scrollTrigger: { trigger: ".merge", start: "top 80%", end: "bottom 60%", scrub: true },
-    scaleY: 1, opacity: 1, ease: "none",
-  }
-);
-gsap.fromTo(
-  ".merge__pulse",
-  { scale: 0 },
-  {
-    scrollTrigger: { trigger: ".merge", start: "top 60%", end: "bottom 50%", scrub: true },
-    scale: 1.4, ease: "none",
-  }
-);
+/* animate the merged trunk drawing in as you scroll past */
+const merge = document.querySelector(".rail-merge");
+if (merge) {
+  const len = merge.getTotalLength();
+  merge.style.strokeDasharray = len;
+  merge.style.strokeDashoffset = len;
+  ScrollTrigger.create({
+    trigger: ".branch-stage",
+    start: "top 60%",
+    end: "bottom 60%",
+    scrub: true,
+    onUpdate: (self) => {
+      merge.style.strokeDashoffset = len * (1 - self.progress);
+    },
+  });
+}
 
 /* ---------- TIMELINE LINE GROW ---------- */
 ScrollTrigger.create({
@@ -156,11 +185,18 @@ gsap.from(".edu", {
   scrollTrigger: { trigger: ".edu__grid", start: "top 80%" },
   y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
 });
-gsap.from(".tools__list span", {
-  scrollTrigger: { trigger: ".tools", start: "top 80%" },
-  y: 16, opacity: 0, duration: 0.4, stagger: 0.025, ease: "power2.out",
-});
-gsap.from(".foot__title, .foot__contacts, .foot__meta", {
+
+/* TOOLBELT — fromTo so chips are guaranteed visible at the end (no hidden state if trigger misfires) */
+gsap.fromTo(
+  ".tools__list span",
+  { y: 14, opacity: 0 },
+  {
+    scrollTrigger: { trigger: ".tools", start: "top 85%", once: true },
+    y: 0, opacity: 1, duration: 0.5, stagger: 0.02, ease: "power2.out",
+  }
+);
+
+gsap.from(".foot__title, .foot__meta", {
   scrollTrigger: { trigger: ".foot", start: "top 75%" },
   y: 30, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out",
 });
@@ -175,3 +211,6 @@ document.querySelectorAll('.nav__links a[href^="#"]').forEach((a) => {
     window.scrollTo({ top: el.offsetTop - 60, behavior: "smooth" });
   });
 });
+
+/* refresh ScrollTrigger after fonts/layout settle */
+window.addEventListener("load", () => ScrollTrigger.refresh());
