@@ -3,36 +3,23 @@ gsap.registerPlugin(ScrollTrigger);
 /* ---------- LOGO HYDRATION ----------
    Try a chain of public logo sources. On all-fail, paint a colored letter tile. */
 function hydrateLogo(el) {
-  const domain = el.dataset.domain;
+  const src = el.dataset.src;
   const letter = el.dataset.letter || "?";
   const bg = el.dataset.bg || "#0a0a0a";
-  const sources = [
-    `https://logo.clearbit.com/${domain}`,
-    `https://icons.duckduckgo.com/ip3/${domain}.ico`,
-    `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
-  ];
-  let i = 0;
   const img = new Image();
-  img.alt = domain;
-  img.referrerPolicy = "no-referrer";
+  img.alt = "";
   img.onload = () => {
-    if (img.naturalWidth < 16) return img.onerror();
     while (el.firstChild) el.removeChild(el.firstChild);
     el.appendChild(img);
   };
   img.onerror = () => {
-    i += 1;
-    if (i < sources.length) {
-      img.src = sources[i];
-    } else {
-      el.classList.add("has-fallback");
-      el.style.background = bg;
-      el.textContent = letter;
-    }
+    el.classList.add("has-fallback");
+    el.style.background = bg;
+    el.textContent = letter;
   };
-  img.src = sources[0];
+  img.src = src;
 }
-document.querySelectorAll(".card__logo[data-domain]").forEach(hydrateLogo);
+document.querySelectorAll(".card__logo[data-src]").forEach(hydrateLogo);
 
 /* ---------- HERO INTRO ---------- */
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
