@@ -3,19 +3,95 @@ gsap.registerPlugin(ScrollTrigger);
 /* ---------- MODE TOGGLE (9-6 work / 6-9 afterhours) ---------- */
 const modeToggle = document.querySelector(".mode-toggle");
 const modeBtns = document.querySelectorAll(".mode-toggle__btn");
-function setMode(mode) {
+
+function applyMode(mode) {
   document.body.dataset.mode = mode;
   if (modeToggle) modeToggle.dataset.mode = mode;
   modeBtns.forEach((b) => b.classList.toggle("is-active", b.dataset.mode === mode));
-  // settle layout, then refresh ScrollTrigger and bring user to top of section
   requestAnimationFrame(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     ScrollTrigger.refresh();
   });
 }
-modeBtns.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
-// initial mode
+
+/* Theme wipe — circular clip-path expansion centred on the clicked button */
+function setMode(mode, originEvent) {
+  if (mode === document.body.dataset.mode) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || !originEvent) {
+    applyMode(mode);
+    return;
+  }
+  const btn =
+    originEvent.currentTarget ||
+    document.querySelector(`.mode-toggle__btn[data-mode="${mode}"]`);
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const r = Math.hypot(
+    Math.max(cx, window.innerWidth - cx),
+    Math.max(cy, window.innerHeight - cy)
+  );
+
+  const overlay = document.createElement("div");
+  overlay.className = "mode-wipe";
+  overlay.style.background = mode === "afterhours" ? "#0c0e15" : "#f5ecdb";
+  overlay.style.clipPath = `circle(0px at ${cx}px ${cy}px)`;
+  document.body.appendChild(overlay);
+
+  // start expansion next frame
+  requestAnimationFrame(() => {
+    overlay.classList.add("is-expanding");
+    overlay.style.clipPath = `circle(${r}px at ${cx}px ${cy}px)`;
+  });
+
+  // mid-expansion: swap mode behind the overlay
+  setTimeout(() => applyMode(mode), 380);
+  // after expansion: fade overlay out
+  setTimeout(() => {
+    overlay.style.transition = "opacity .45s ease";
+    overlay.style.opacity = "0";
+  }, 820);
+  setTimeout(() => overlay.remove(), 1320);
+}
+
+modeBtns.forEach((b) =>
+  b.addEventListener("click", (e) => setMode(b.dataset.mode, e))
+);
 document.body.dataset.mode = document.body.dataset.mode || "work";
+
+/* ---------- SCROLL PROGRESS BAR ---------- */
+const sp = document.querySelector(".scroll-progress");
+function updateScrollProgress() {
+  if (!sp) return;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+  sp.style.width = pct + "%";
+}
+window.addEventListener("scroll", updateScrollProgress, { passive: true });
+window.addEventListener("resize", updateScrollProgress);
+updateScrollProgress();
+
+/* ---------- MAGNETIC TILT ---------- */
+function attachTilt(el, max = 5) {
+  el.classList.add("tilt");
+  el.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    if (el.classList.contains("flipped") || el.classList.contains("dragging")) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.classList.add("is-tilting");
+    el.style.transform = `perspective(1100px) rotateY(${x * max}deg) rotateX(${-y * max}deg) translateY(-3px)`;
+  });
+  el.addEventListener("pointerleave", () => {
+    el.classList.remove("is-tilting");
+    el.style.transform = "";
+  });
+}
+document
+  .querySelectorAll(".passion, .edu")
+  .forEach((el) => attachTilt(el, 4));
 
 /* ---------- LOGO HYDRATION ----------
    Try a chain of public logo sources. On all-fail, paint a colored letter tile. */

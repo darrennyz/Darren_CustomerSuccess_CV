@@ -636,3 +636,104 @@ html, body,
 }
 
 body::before{ transition: background .55s ease }
+
+/* ==========================================================
+   ANIMATION POLISH
+   ========================================================== */
+
+/* Scroll progress bar */
+.scroll-progress{
+  position:fixed;top:0;left:0;
+  height:2px;width:0%;
+  background:var(--accent);
+  z-index:100;
+  box-shadow:0 0 12px var(--accent);
+  pointer-events:none;
+  transition: width .12s linear, background .55s ease, box-shadow .55s ease;
+}
+
+/* Theme wipe overlay (clip-path circle expansion) */
+.mode-wipe{
+  position:fixed;inset:0;z-index:99;
+  pointer-events:none;
+  clip-path:circle(0px at 50% 0%);
+  will-change: clip-path;
+}
+.mode-wipe.is-expanding{
+  transition: clip-path .8s cubic-bezier(.86,0,.07,1);
+}
+
+/* Floating orbs in afterhours hero */
+.orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.orb{
+  position:absolute;border-radius:50%;
+  filter:blur(40px);opacity:.5;
+  will-change: transform;
+}
+.orb--1{
+  width:480px;height:480px;
+  background:radial-gradient(circle, rgba(165,168,232,.55), transparent 70%);
+  top:-120px;right:-80px;
+  animation: float-1 16s ease-in-out infinite;
+}
+.orb--2{
+  width:360px;height:360px;
+  background:radial-gradient(circle, rgba(255,154,107,.45), transparent 70%);
+  bottom:-100px;left:8%;
+  animation: float-2 22s ease-in-out infinite;
+}
+.orb--3{
+  width:280px;height:280px;
+  background:radial-gradient(circle, rgba(165,168,232,.35), transparent 70%);
+  top:35%;right:30%;
+  animation: float-3 28s ease-in-out infinite;
+}
+@keyframes float-1{
+  0%,100%{ transform:translate(0,0) scale(1) }
+  50%{ transform:translate(-40px, 60px) scale(1.08) }
+}
+@keyframes float-2{
+  0%,100%{ transform:translate(0,0) scale(1) }
+  50%{ transform:translate(60px, -40px) scale(1.12) }
+}
+@keyframes float-3{
+  0%,100%{ transform:translate(0,0) scale(1) }
+  33%{ transform:translate(-30px, -50px) scale(.95) }
+  66%{ transform:translate(50px, 30px) scale(1.05) }
+}
+.hero--afterhours__inner{ position:relative; z-index:2 }
+
+/* Marquee toolbelt */
+.tools__marquee{
+  position:relative;
+  overflow:hidden;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.tools__track{
+  display:flex;gap:8px;width:max-content;
+  animation: marquee 60s linear infinite;
+}
+.tools__marquee:hover .tools__track{ animation-play-state:paused }
+.tools__track span{
+  flex-shrink:0;
+  font-family:var(--mono);font-size:12px;color:var(--ink-2);
+  border:1px solid var(--line-2);padding:8px 14px;border-radius:999px;
+  background:#fff;
+  transition: color .25s, border-color .25s, transform .25s;
+}
+.tools__track span:hover{ color:var(--accent);border-color:var(--accent);transform:translateY(-2px) }
+@keyframes marquee{
+  0%{ transform:translateX(0) }
+  100%{ transform:translateX(-50%) }
+}
+body[data-mode="afterhours"] .tools__track span{ background:var(--bg-2);color:var(--ink-2);border-color:var(--line-2) }
+body[data-mode="afterhours"] .tools__track span:hover{ color:var(--accent);border-color:var(--accent) }
+
+@media (prefers-reduced-motion: reduce){
+  .orb, .tools__track, .pulse::after{ animation:none !important }
+}
+
+/* Magnetic tilt — set via JS as inline transform on .tilt elements */
+.tilt{ transition: transform .35s cubic-bezier(.2,.8,.2,1) }
+.tilt.is-tilting{ transition: transform .08s linear }

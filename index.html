@@ -14,6 +14,9 @@
 </head>
 <body data-mode="work">
 
+<!-- Scroll progress -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav class="nav">
   <div class="nav__brand">
@@ -355,6 +358,11 @@
 
 <!-- AFTERHOURS HERO - personal summary, no formal hero structure -->
 <section class="hero hero--afterhours" data-view="afterhours">
+  <div class="orbs" aria-hidden="true">
+    <span class="orb orb--1"></span>
+    <span class="orb orb--2"></span>
+    <span class="orb orb--3"></span>
+  </div>
   <div class="hero--afterhours__inner">
     <div class="hero__eyebrow">
       <span class="pulse pulse--warm"></span>
@@ -482,12 +490,20 @@
 
   <div class="tools">
     <span class="kicker">Toolbelt</span>
-    <div class="tools__list">
-      <span>Gainsight</span><span>Zendesk</span><span>Salesforce</span><span>HubSpot CRM</span>
-      <span>Nintex Workflow</span><span>Nintex Process Manager</span><span>Microsoft Dynamics</span>
-      <span>Anthropic Claude</span><span>OpenAI ChatGPT</span><span>Gemini</span>
-      <span>Supabase</span><span>GitHub</span><span>Vercel</span><span>Railway</span>
-      <span>LinkedIn Sales Navigator</span><span>ZoomInfo</span><span>BIPO HRMS</span>
+    <div class="tools__marquee">
+      <div class="tools__track">
+        <span>Gainsight</span><span>Zendesk</span><span>Salesforce</span><span>HubSpot CRM</span>
+        <span>Nintex Workflow</span><span>Nintex Process Manager</span><span>Microsoft Dynamics</span>
+        <span>Anthropic Claude</span><span>OpenAI ChatGPT</span><span>Gemini</span>
+        <span>Supabase</span><span>GitHub</span><span>Vercel</span><span>Railway</span>
+        <span>LinkedIn Sales Navigator</span><span>ZoomInfo</span><span>BIPO HRMS</span>
+        <!-- duplicate for seamless loop -->
+        <span aria-hidden="true">Gainsight</span><span aria-hidden="true">Zendesk</span><span aria-hidden="true">Salesforce</span><span aria-hidden="true">HubSpot CRM</span>
+        <span aria-hidden="true">Nintex Workflow</span><span aria-hidden="true">Nintex Process Manager</span><span aria-hidden="true">Microsoft Dynamics</span>
+        <span aria-hidden="true">Anthropic Claude</span><span aria-hidden="true">OpenAI ChatGPT</span><span aria-hidden="true">Gemini</span>
+        <span aria-hidden="true">Supabase</span><span aria-hidden="true">GitHub</span><span aria-hidden="true">Vercel</span><span aria-hidden="true">Railway</span>
+        <span aria-hidden="true">LinkedIn Sales Navigator</span><span aria-hidden="true">ZoomInfo</span><span aria-hidden="true">BIPO HRMS</span>
+      </div>
     </div>
   </div>
 </section>
