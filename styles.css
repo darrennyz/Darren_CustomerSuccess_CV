@@ -737,3 +737,19 @@ body[data-mode="afterhours"] .tools__track span:hover{ color:var(--accent);borde
 /* Magnetic tilt — set via JS as inline transform on .tilt elements */
 .tilt{ transition: transform .35s cubic-bezier(.2,.8,.2,1) }
 .tilt.is-tilting{ transition: transform .08s linear }
+
+/* Education certifications list */
+.edu__certs{ list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:4px }
+.edu__certs li{ font-size:13.5px;line-height:1.45 }
+.edu__certs a{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--ink-2);
+  border-bottom:1px solid transparent;
+  transition: color .2s, border-color .2s, gap .2s;
+  padding-bottom:1px;
+}
+.edu__certs a:hover{ color:var(--accent);border-color:var(--accent);gap:9px }
+.edu__arrow{ font-size:11px;opacity:.6;transition: opacity .2s, transform .2s }
+.edu__certs a:hover .edu__arrow{ opacity:1;transform:translate(2px,-2px) }
+.edu{ min-height:auto }
+.edu__body h4{ margin-bottom:12px }
