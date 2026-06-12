@@ -7,9 +7,10 @@
 <meta name="description" content="Interactive CV - Enterprise Customer Success Manager specializing in AI Adoption & Outcomes." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <link rel="stylesheet" href="styles.css" />
 
 <!-- Google tag (gtag.js) -->
@@ -22,10 +23,24 @@
   gtag('config', 'G-2ZE6WEGME6');
 </script>
 </head>
-<body data-mode="work">
+<body data-mode="work" class="is-loading">
+
+<!-- PRELOADER -->
+<div class="preloader" aria-hidden="true">
+  <div class="preloader__name" data-split>Darren Ng</div>
+  <div class="preloader__count"><span class="preloader__num">0</span></div>
+  <div class="preloader__bar"><span></span></div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"><span class="cursor-label"></span></div>
 
 <!-- Scroll progress -->
 <div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- Film grain -->
+<div class="noise" aria-hidden="true"></div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -47,26 +62,26 @@
   </div>
 
   <div class="nav__links">
-    <a href="#summary">Summary</a>
-    <a href="#timeline">Experience</a>
-    <a href="#education">Education</a>
+    <a href="#summary" data-magnetic>Summary</a>
+    <a href="#timeline" data-magnetic>Experience</a>
+    <a href="#education" data-magnetic>Education</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ============ WORK : HERO ============ -->
 <section id="summary" class="hero" data-view="work">
   <div class="hero__grid">
     <div class="hero__main">
-      <div class="hero__eyebrow">
+      <div class="hero__eyebrow" data-intro="eyebrow">
         <span class="pulse"></span>
         Available for enterprise CSM roles · Singapore
       </div>
-      <h1 class="hero__title">
+      <h1 class="hero__title" data-split-hero>
         AI-Native<br/>
         <em>Customer Success</em><br/>
         for the enterprise.
       </h1>
-      <p class="hero__lede">
+      <p class="hero__lede" data-intro="lede">
         7+ years driving renewal success, multi-product adoption, and value realization
         for APAC enterprises. Managed <b>USD $6-7M ARR</b> portfolios at <b>99%+ GRR</b>,
         with executive-level stakeholder engagement.
@@ -103,24 +118,33 @@
     </aside>
   </div>
 
-  <div class="hero__scroll">
+  <div class="hero__scroll" data-intro="scrollcue">
     <span class="line"></span>
     <span>Career timeline</span>
   </div>
 </section>
 
+<!-- Marquee divider -->
+<div class="marquee-band" data-view="work" aria-hidden="true">
+  <div class="marquee-band__track">
+    <span class="marquee-band__inner">Retention&ensp;·&ensp;Expansion&ensp;·&ensp;Adoption&ensp;·&ensp;<em>AI-Native</em>&ensp;·&ensp;</span>
+    <span class="marquee-band__inner">Retention&ensp;·&ensp;Expansion&ensp;·&ensp;Adoption&ensp;·&ensp;<em>AI-Native</em>&ensp;·&ensp;</span>
+  </div>
+</div>
+
 <!-- TIMELINE INTRO -->
 <section class="intro" data-view="work">
   <div class="intro__inner">
-    <span class="kicker">02 - Career path</span>
-    <h2 class="intro__title">A track record built on retention, expansion, and adoption.</h2>
-    <p class="intro__sub">Two roles run concurrently today - slide between them - before the timeline merges into prior chapters. Tap any card to flip it and read about the company.</p>
+    <span class="kicker" data-reveal>02 - Career path</span>
+    <div class="rule" data-rule></div>
+    <h2 class="intro__title" data-split>A track record built on retention, expansion, and adoption.</h2>
+    <p class="intro__sub" data-reveal>Two roles run concurrently today - slide between them - before the timeline merges into prior chapters. Tap any card to flip it and read about the company.</p>
   </div>
 </section>
 
 <!-- CONCURRENT - Branched timeline as the slider -->
 <section id="timeline" class="concurrent" data-view="work">
-  <div class="concurrent__header">
+  <div class="concurrent__header" data-reveal>
     <div class="period">
       <span class="period__year">2025 → Present</span>
       <span class="period__label">Two concurrent roles</span>
@@ -135,15 +159,15 @@
       <path class="rail-merge" d="M 400,400 L 400,760" />
       <circle class="node node-l" cx="200" cy="0" r="6" />
       <circle class="node node-r" cx="600" cy="0" r="6" />
-      <circle class="node node-merge" cx="400" cy="400" r="6" fill="#0a0a0a" stroke="none" />
+      <circle class="node node-merge" cx="400" cy="400" r="6" />
     </svg>
 
-    <div class="card-stack" id="cardStack">
+    <div class="card-stack" id="cardStack" data-cursor="drag">
 
       <!-- NINTEX -->
       <article class="role-card flippable" data-i="0">
         <div class="flip-inner">
-          <div class="flip-face flip-face--front">
+          <div class="flip-face flip-face--front glare">
             <div class="card__top">
               <div class="card__co">
                 <span class="card__logo" data-src="assets/nintex_logo.jpeg" data-letter="N" data-bg="#3a194a"></span>
@@ -184,7 +208,7 @@
       <!-- AVERPS -->
       <article class="role-card flippable is-back" data-i="1">
         <div class="flip-inner">
-          <div class="flip-face flip-face--front">
+          <div class="flip-face flip-face--front glare">
             <div class="card__top">
               <div class="card__co">
                 <span class="card__logo" data-src="assets/averps_logo.jpeg" data-letter="A" data-bg="#3650e0"></span>
@@ -236,9 +260,9 @@
 
   <article class="t-item" data-side="left">
     <div class="t-dot"></div>
-    <div class="t-card flippable">
+    <div class="t-card flippable" data-cursor="flip">
       <div class="flip-inner">
-        <div class="flip-face flip-face--front">
+        <div class="flip-face flip-face--front glare">
           <div class="t-card__head">
             <span class="chip">Nov 2022 - Apr 2025</span>
             <div class="t-card__title">
@@ -283,9 +307,9 @@
 
   <article class="t-item" data-side="right">
     <div class="t-dot"></div>
-    <div class="t-card flippable">
+    <div class="t-card flippable" data-cursor="flip">
       <div class="flip-inner">
-        <div class="flip-face flip-face--front">
+        <div class="flip-face flip-face--front glare">
           <div class="t-card__head">
             <span class="chip">Jan 2022 - Oct 2022</span>
             <div class="t-card__title">
@@ -325,9 +349,9 @@
 
   <article class="t-item" data-side="left">
     <div class="t-dot"></div>
-    <div class="t-card flippable">
+    <div class="t-card flippable" data-cursor="flip">
       <div class="flip-inner">
-        <div class="flip-face flip-face--front">
+        <div class="flip-face flip-face--front glare">
           <div class="t-card__head">
             <span class="chip">Sep 2019 - Aug 2021</span>
             <div class="t-card__title">
@@ -366,7 +390,7 @@
   </article>
 </section>
 
-<!-- AFTERHOURS HERO - personal summary, no formal hero structure -->
+<!-- ============ AFTERHOURS : HERO ============ -->
 <section class="hero hero--afterhours" data-view="afterhours">
   <div class="orbs" aria-hidden="true">
     <span class="orb orb--1"></span>
@@ -378,7 +402,7 @@
       <span class="pulse pulse--warm"></span>
       After 6pm · off the clock
     </div>
-    <h1 class="hero__title hero__title--ah">
+    <h1 class="hero__title hero__title--ah" data-split-ah>
       Curious cook,<br/>
       <em>vibe coder,</em><br/>
       student of AI.
@@ -396,15 +420,24 @@
   </div>
 </section>
 
+<!-- Marquee divider (afterhours) -->
+<div class="marquee-band marquee-band--ah" data-view="afterhours" aria-hidden="true">
+  <div class="marquee-band__track">
+    <span class="marquee-band__inner">Cook&ensp;·&ensp;Code&ensp;·&ensp;Learn&ensp;·&ensp;<em>Repeat</em>&ensp;·&ensp;</span>
+    <span class="marquee-band__inner">Cook&ensp;·&ensp;Code&ensp;·&ensp;Learn&ensp;·&ensp;<em>Repeat</em>&ensp;·&ensp;</span>
+  </div>
+</div>
+
 <!-- PASSIONS -->
 <section class="passions" data-view="afterhours">
   <div class="passions__head">
-    <span class="kicker">02 - Outside work</span>
-    <h2 class="passions__title">Three things I keep coming back to.</h2>
+    <span class="kicker" data-reveal>02 - Outside work</span>
+    <div class="rule" data-rule></div>
+    <h2 class="passions__title" data-split>Three things I keep coming back to.</h2>
   </div>
 
   <div class="passions__grid">
-    <article class="passion">
+    <article class="passion glare" data-reveal>
       <div class="passion__num">01</div>
       <h3>Cooking</h3>
       <p class="passion__sub">French technique · nutrition led</p>
@@ -414,7 +447,7 @@
       </div>
     </article>
 
-    <article class="passion">
+    <article class="passion glare" data-reveal>
       <div class="passion__num">02</div>
       <h3>Vibe coding</h3>
       <p class="passion__sub">Claude as collaborator</p>
@@ -424,7 +457,7 @@
       </div>
     </article>
 
-    <article class="passion">
+    <article class="passion glare" data-reveal>
       <div class="passion__num">03</div>
       <h3>Learning AI</h3>
       <p class="passion__sub">From fluency to fluent practitioner</p>
@@ -439,26 +472,27 @@
 <!-- CURRENTLY EXPLORING -->
 <section class="exploring" data-view="afterhours">
   <div class="exploring__inner">
-    <span class="kicker">03 - Currently exploring</span>
-    <h2 class="exploring__title">On the bench <em>this season.</em></h2>
+    <span class="kicker" data-reveal>03 - Currently exploring</span>
+    <div class="rule" data-rule></div>
+    <h2 class="exploring__title" data-split>On the bench <em>this season.</em></h2>
 
     <ul class="exploring__list">
-      <li>
+      <li data-reveal>
         <span class="exploring__lbl">Course</span>
         <h4>Building with the Claude API</h4>
         <p>Anthropic Education - beyond chat: tools, caching, batch, and structured agentic flows.</p>
       </li>
-      <li>
+      <li data-reveal>
         <span class="exploring__lbl">Pattern</span>
         <h4>Model-Context-Protocol</h4>
         <p>Composing MCP servers and clients for real workflows - process chatbots, document agents, codified company context.</p>
       </li>
-      <li>
+      <li data-reveal>
         <span class="exploring__lbl">Stack</span>
         <h4>Vibe coding pipeline</h4>
         <p>Claude Code → GitHub → Vercel/Railway → Supabase. End-to-end shipping in an evening.</p>
       </li>
-      <li>
+      <li data-reveal>
         <span class="exploring__lbl">Kitchen</span>
         <h4>French technique, nutrition forward</h4>
         <p>Working the mother sauces, dialling in protein and macro balance, and treating dinner as the day's most rewarding craft.</p>
@@ -467,15 +501,16 @@
   </div>
 </section>
 
-<!-- EDUCATION -->
+<!-- ============ SHARED : EDUCATION ============ -->
 <section id="education" class="education">
   <div class="edu__head">
-    <span class="kicker">03 - Education & Certification</span>
-    <h2>Foundations.</h2>
+    <span class="kicker" data-reveal>03 - Education & Certification</span>
+    <div class="rule" data-rule></div>
+    <h2 data-split>Foundations.</h2>
   </div>
 
   <div class="edu__grid">
-    <div class="edu">
+    <div class="edu glare" data-reveal>
       <div class="edu__year">2026</div>
       <div class="edu__body">
         <h4>Anthropic Academy</h4>
@@ -488,14 +523,14 @@
         </ul>
       </div>
     </div>
-    <div class="edu">
+    <div class="edu glare" data-reveal>
       <div class="edu__year">2018 - 2019</div>
       <div class="edu__body">
         <h4>Royal Melbourne Institute of Technology</h4>
         <p>Bachelor's Degree in Economics and Finance</p>
       </div>
     </div>
-    <div class="edu">
+    <div class="edu glare" data-reveal>
       <div class="edu__year">2016 - 2017</div>
       <div class="edu__body">
         <h4>Singapore Institute of Management</h4>
@@ -505,7 +540,7 @@
   </div>
 
   <div class="tools">
-    <span class="kicker">Toolbelt</span>
+    <span class="kicker" data-reveal>Toolbelt</span>
     <div class="tools__marquee">
       <div class="tools__track">
         <span>Gainsight</span><span>Zendesk</span><span>Salesforce</span><span>HubSpot CRM</span>
@@ -524,11 +559,17 @@
   </div>
 </section>
 
-<!-- FOOTER / CTA -->
+<!-- ============ FOOTER ============ -->
 <footer class="foot">
+  <div class="foot__name-band" aria-hidden="true">
+    <div class="foot__name-track">
+      <span>Darren Ng&ensp;·&ensp;Customer Success&ensp;·&ensp;</span>
+      <span>Darren Ng&ensp;·&ensp;Customer Success&ensp;·&ensp;</span>
+    </div>
+  </div>
   <div class="foot__inner">
-    <h2 class="foot__title">Driving <em>renewal, retention,<br/>and AI-led adoption</em> across APAC.</h2>
-    <div class="foot__meta">
+    <h2 class="foot__title" data-split>Driving <em>renewal, retention,<br/>and AI-led adoption</em> across APAC.</h2>
+    <div class="foot__meta" data-reveal>
       <span>© Darren Ng Yong Ze · Singapore</span>
       <span>Native English · Conversational Mandarin</span>
     </div>
