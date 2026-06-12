@@ -681,6 +681,45 @@ html, body,
 .tilt{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .tilt.is-tilting{transition:transform .08s linear}
 
+/* ----------  HERO: SINGLE-VIEWPORT FIT (work view)  ----------
+   Lock the 9-6 hero to exactly one screen. Every internal size
+   clamps against BOTH viewport width and height so the layout
+   compresses gracefully on short or narrow windows instead of
+   scrolling. Falls back to natural flow when columns stack. */
+#summary.hero{
+  height:100svh;min-height:0;max-height:100svh;overflow:hidden;
+  padding:calc(64px + 3vh) var(--pad) clamp(12px,2.5vh,28px);
+}
+#summary .hero__grid{gap:clamp(28px,4vw,72px)}
+#summary .hero__eyebrow{
+  margin-bottom:clamp(12px,2.4vh,32px);
+  padding:7px 14px;font-size:11px;
+}
+#summary .hero__title{
+  font-size:clamp(34px, min(6.2vw, 10vh), 96px);
+  margin-bottom:clamp(14px,2.8vh,34px);
+}
+#summary .hero__lede{
+  font-size:clamp(13.5px, min(1.25vw, 1.9vh), 17px);
+  margin-bottom:clamp(16px,3.2vh,40px);
+  max-width:540px;
+}
+#summary .hero__metrics{padding-top:clamp(12px,2.2vh,26px)}
+#summary .metric__num{font-size:clamp(24px, min(3vw, 4.8vh), 46px);margin-bottom:6px}
+#summary .metric__label{font-size:clamp(8.5px, min(.78vw, 1.25vh), 10.5px)}
+#summary .hero__skills{padding-top:clamp(10px,1.8vh,18px)}
+#summary .skills__head{margin-bottom:2px}
+#summary .skills__group{padding:clamp(8px,1.7vh,15px) 0}
+#summary .skills__group h4{font-size:clamp(9px, 1.25vh, 11px);margin-bottom:4px}
+#summary .skills__group p{font-size:clamp(11px, min(.95vw, 1.55vh), 13px);line-height:1.5}
+#summary .hero__scroll{margin-top:clamp(8px,1.6vh,22px)}
+
+/* Columns stack below 980px - a true one-screen fit is no longer
+   possible, so restore natural scrolling flow there. */
+@media (max-width:980px){
+  #summary.hero{height:auto;min-height:100svh;max-height:none;overflow:visible}
+}
+
 /* ----------  REDUCED MOTION  ---------- */
 @media (prefers-reduced-motion: reduce){
   .orb, .tools__track, .marquee-band__track, .foot__name-track,
